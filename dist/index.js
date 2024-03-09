@@ -20,7 +20,7 @@ function main() {
             //@ts-ignore
             // console.log(response);
             const id = res.element;
-            yield (0, aws_1.downloadS3Folder)(`output/${id}`);
+            yield (0, aws_1.downloadS3Folder)(`/output/${id}`);
             console.log("downloaded");
         }
     });

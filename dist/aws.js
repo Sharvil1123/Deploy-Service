@@ -42,7 +42,7 @@ function downloadS3Folder(prefix) {
                 }
                 s3.getObject({
                     Bucket: "vercel-bucket",
-                    Key: Key || ""
+                    Key: ""
                 }).createReadStream().pipe(outputFile)
                     .on("finish", () => {
                     resolve("");

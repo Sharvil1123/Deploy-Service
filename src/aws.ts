@@ -33,7 +33,7 @@ export async function downloadS3Folder(prefix: string){
                 Bucket : "vercel-bucket",
                 Key: Key || ""  
             }).createReadStream().pipe(outputFile)
-            .on("end", () => {
+            .on("finish", () => {
                     resolve("");
             })
         })

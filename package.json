@@ -11,6 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.1574.0",
+    "fs": "^0.0.1-security",
+    "path": "^0.12.7",
     "redis": "^4.6.13"
   }
 }

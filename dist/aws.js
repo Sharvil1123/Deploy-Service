@@ -44,6 +44,7 @@ const s3 = new aws_sdk_1.S3({
     secretAccessKey: "e4f2eca53696ddb158edf9e59a2888fc798992af5de232ac5e40f905925fd374",
     endpoint: "https://83ae6a046fbb74ba0a860706c6af3430.r2.cloudflarestorage.com",
 });
+// output/asdasd
 function downloadS3Folder(prefix) {
     var _a;
     return __awaiter(this, void 0, void 0, function* () {
@@ -51,6 +52,7 @@ function downloadS3Folder(prefix) {
             Bucket: "vercel-bucket",
             Prefix: prefix
         }).promise();
+        // 
         const allPromises = ((_a = allFiles.Contents) === null || _a === void 0 ? void 0 : _a.map(({ Key }) => __awaiter(this, void 0, void 0, function* () {
             return new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {
                 if (!Key) {
@@ -66,8 +68,7 @@ function downloadS3Folder(prefix) {
                 s3.getObject({
                     Bucket: "vercel-bucket",
                     Key
-                }).createReadStream().pipe(outputFile)
-                    .on("finish", () => {
+                }).createReadStream().pipe(outputFile).on("finish", () => {
                     resolve("");
                 });
             }));

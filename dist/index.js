@@ -16,12 +16,31 @@ subscriber.connect();
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         while (1) {
-            const res = yield subscriber.brPop((0, redis_1.commandOptions)({ isolated: true }), 'build-queue', 0);
-            // console.log(response);
-            const id = res === null || res === void 0 ? void 0 : res.element;
+            const res = yield subscriber.brPop((0, redis_1.commandOptions)({ isolated: true }), "build-queue", 0);
+            //@ts-ignore
+            const id = res.element;
             yield (0, aws_1.downloadS3Folder)(`output/${id}`);
             console.log("downloaded");
         }
     });
 }
 main();
+// import {createClient, commandOptions} from "redis";
+// import { downloadS3Folder } from "./aws";
+// const subscriber = createClient();
+// subscriber.connect();
+// async function main() {
+//     while(1){
+//         const res = await subscriber.brPop(
+//             commandOptions({isolated: true}),
+//             'build-queue',
+//             0
+//         );
+//             //@ts-ignore
+//         // console.log(response);
+//         const id = res.element;
+//         await downloadS3Folder(`output/${id}`);
+//         console.log("downloaded");
+//     }
+// }
+// main();

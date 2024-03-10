@@ -12,10 +12,10 @@ async function main() {
             0
         );
 
-        //@ts-ignore
+        
         // console.log(response);
-        const id = res.element;
-        await downloadS3Folder(`/output/${id}`);
+        const id = res?.element;
+        await downloadS3Folder(`output/${id}`);
         console.log("downloaded");
     }
 }

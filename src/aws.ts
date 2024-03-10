@@ -1,5 +1,5 @@
 import path from "path";
-import fs from "fs";
+import * as fs from 'node:fs';
 import { S3 } from "aws-sdk";
 
 const s3 = new S3({
@@ -31,13 +31,13 @@ export async function downloadS3Folder(prefix: string){
             }
             s3.getObject({
                 Bucket : "vercel-bucket",
-                Key: ""
+                Key
             }).createReadStream().pipe(outputFile)
             .on("finish", () => {
                     resolve("");
             })
         })
     }) || []   
-
+    console.log("awaiting");
     await Promise.all (allPromises?.filter(x => x !== undefined));
 }

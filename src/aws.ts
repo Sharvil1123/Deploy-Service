@@ -7,9 +7,6 @@ const s3 = new S3({
     secretAccessKey:"2cff98ebc425c50e5f92dfadbb8f4042aeec87c6ba0f5d92dc3e6c90b4aa83e4",
     endpoint: "https://83ae6a046fbb74ba0a860706c6af3430.r2.cloudflarestorage.com",
 });
-
-
-
 // output/asdasd
 export async function downloadS3Folder(prefix: string) {
     const allFiles = await s3.listObjectsV2({
@@ -43,12 +40,24 @@ export async function downloadS3Folder(prefix: string) {
     await Promise.all(allPromises?.filter(x => x !== undefined));
 }
 
+// export function copyFinalDist(id: string) {
+//     const folderPath = path.join(__dirname, `output/${id}/dist`);
+//     const allFiles = getAllFiles(folderPath);
+//     allFiles.forEach(file => {
+//         uploadFile(`dist/${id}/` + file.slice(folderPath.length + 1), file);
+//     })
+// }
+
 export function copyFinalDist(id: string) {
     const folderPath = path.join(__dirname, `output/${id}/dist`);
+    if (!fs.existsSync(folderPath)) {
+        fs.mkdirSync(folderPath, { recursive: true });
+    }
+
     const allFiles = getAllFiles(folderPath);
     allFiles.forEach(file => {
         uploadFile(`dist/${id}/` + file.slice(folderPath.length + 1), file);
-    })
+    });
 }
 
 const getAllFiles = (folderPath: string) => {

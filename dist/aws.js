@@ -35,7 +35,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.copyFinalDist = exports.downloadS3Folder = void 0;
+exports.downloadS3Folder = void 0;
 const path_1 = __importDefault(require("path"));
 const fs = __importStar(require("fs"));
 const aws_sdk_1 = require("aws-sdk");
@@ -78,34 +78,31 @@ function downloadS3Folder(prefix) {
     });
 }
 exports.downloadS3Folder = downloadS3Folder;
-function copyFinalDist(id) {
-    const folderPath = path_1.default.join(__dirname, `output/${id}/dist`);
-    const allFiles = getAllFiles(folderPath);
-    allFiles.forEach(file => {
-        uploadFile(`dist/${id}/` + file.slice(folderPath.length + 1), file);
-    });
-}
-exports.copyFinalDist = copyFinalDist;
-const getAllFiles = (folderPath) => {
-    let response = [];
-    const allFilesAndFolders = fs.readdirSync(folderPath);
-    allFilesAndFolders.forEach(file => {
-        const fullFilePath = path_1.default.join(folderPath, file);
-        if (fs.statSync(fullFilePath).isDirectory()) {
-            response = response.concat(getAllFiles(fullFilePath));
-        }
-        else {
-            response.push(fullFilePath);
-        }
-    });
-    return response;
-};
-const uploadFile = (fileName, localFilePath) => __awaiter(void 0, void 0, void 0, function* () {
-    const fileContent = fs.readFileSync(localFilePath);
-    const response = yield s3.upload({
-        Body: fileContent,
-        Bucket: "vercel",
-        Key: fileName,
-    }).promise();
-    console.log(response);
-});
+// export function copyFinalDist(id: string) {
+//     const folderPath = path.join(__dirname, `output/${id}/dist`);
+//     const allFiles = getAllFiles(folderPath);
+//     allFiles.forEach(file => {
+//         uploadFile(`dist/${id}/` + file.slice(folderPath.length + 1), file);
+//     })
+// }
+// const getAllFiles = (folderPath: string) => {
+//     let response: string[] = [];
+//     const allFilesAndFolders = fs.readdirSync(folderPath);allFilesAndFolders.forEach(file => {
+//         const fullFilePath = path.join(folderPath, file);
+//         if (fs.statSync(fullFilePath).isDirectory()) {
+//             response = response.concat(getAllFiles(fullFilePath))
+//         } else {
+//             response.push(fullFilePath);
+//         }
+//     });
+//     return response;
+// }
+// const uploadFile = async (fileName: string, localFilePath: string) => {
+//     const fileContent = fs.readFileSync(localFilePath);
+//     const response = await s3.upload({
+//         Body: fileContent,
+//         Bucket: "vercel",
+//         Key: fileName,
+//     }).promise();
+//     console.log(response);
+// }

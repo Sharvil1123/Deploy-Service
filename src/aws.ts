@@ -13,7 +13,7 @@ const s3 = new S3({
 // output/asdasd
 export async function downloadS3Folder(prefix: string) {
     const allFiles = await s3.listObjectsV2({
-        Bucket: "vercel-bucket",
+        Bucket: "vercel",
         Prefix: prefix
     }).promise();
     
@@ -31,7 +31,7 @@ export async function downloadS3Folder(prefix: string) {
                 fs.mkdirSync(dirName, { recursive: true });
             }
             s3.getObject({
-                Bucket: "vercel-bucket",
+                Bucket: "vercel",
                 Key
             }).createReadStream().pipe(outputFile).on("finish", () => {
                 resolve("");
@@ -69,7 +69,7 @@ const uploadFile = async (fileName: string, localFilePath: string) => {
     const fileContent = fs.readFileSync(localFilePath);
     const response = await s3.upload({
         Body: fileContent,
-        Bucket: "vercel-bucket",
+        Bucket: "vercel",
         Key: fileName,
     }).promise();
     console.log(response);

@@ -1,6 +1,10 @@
-import path from "path";
+
 import * as fs from 'fs';
 import { S3 } from "aws-sdk";
+
+const path = require("path");
+
+
 
 const s3 = new S3({
     accessKeyId: "a15e4ff7159459f3722bd989844d7378",

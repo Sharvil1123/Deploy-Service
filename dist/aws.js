@@ -31,14 +31,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.copyFinalDist = exports.downloadS3Folder = void 0;
-const path_1 = __importDefault(require("path"));
 const fs = __importStar(require("fs"));
 const aws_sdk_1 = require("aws-sdk");
+const path = require("path");
 const s3 = new aws_sdk_1.S3({
     accessKeyId: "a15e4ff7159459f3722bd989844d7378",
     secretAccessKey: "2cff98ebc425c50e5f92dfadbb8f4042aeec87c6ba0f5d92dc3e6c90b4aa83e4",
@@ -58,11 +55,11 @@ function downloadS3Folder(prefix) {
                     resolve("");
                     return;
                 }
-                const finalOutputPath = path_1.default.join(__dirname, Key);
+                const finalOutputPath = path.join(__dirname, Key);
                 console.log(finalOutputPath);
                 const outputFile = fs.createWriteStream(finalOutputPath);
                 console.log(outputFile);
-                const dirName = path_1.default.dirname(finalOutputPath);
+                const dirName = path.dirname(finalOutputPath);
                 console.log(dirName);
                 if (!fs.existsSync(dirName)) {
                     fs.mkdirSync(dirName, { recursive: true });
@@ -81,7 +78,7 @@ function downloadS3Folder(prefix) {
 }
 exports.downloadS3Folder = downloadS3Folder;
 function copyFinalDist(id) {
-    const folderPath = path_1.default.join(__dirname, `output/${id}/dist`);
+    const folderPath = path.join(__dirname, `output/${id}/dist`);
     const allFiles = getAllFiles(folderPath);
     allFiles.forEach(file => {
         uploadFile(`dist/${id}/` + file.slice(folderPath.length + 1), file);
@@ -92,7 +89,7 @@ const getAllFiles = (folderPath) => {
     let response = [];
     const allFilesAndFolders = fs.readdirSync(folderPath);
     allFilesAndFolders.forEach(file => {
-        const fullFilePath = path_1.default.join(folderPath, file);
+        const fullFilePath = path.join(folderPath, file);
         if (fs.statSync(fullFilePath).isDirectory()) {
             // response = response.concat(getAllFiles(fullFilePath))
             if (!file.startsWith(".git")) {

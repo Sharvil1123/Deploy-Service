@@ -94,7 +94,10 @@ const getAllFiles = (folderPath) => {
     allFilesAndFolders.forEach(file => {
         const fullFilePath = path_1.default.join(folderPath, file);
         if (fs.statSync(fullFilePath).isDirectory()) {
-            response = response.concat(getAllFiles(fullFilePath));
+            // response = response.concat(getAllFiles(fullFilePath))
+            if (!file.startsWith(".git")) {
+                response = response.concat(getAllFiles(fullFilePath));
+            }
         }
         else {
             response.push(fullFilePath);
